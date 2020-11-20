@@ -15,11 +15,29 @@ html {
 body {
   min-height: 100vh;
   font-family: "Press Start 2P", cursive;
+  background: whitesmoke;
 }
 
 h1 {
   text-align: center;
   margin: 3rem 0;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  margin: 1rem 0;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.gallery {
+  display: grid;
 }
 
 .image {
