@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 
 *,
 ::before,
@@ -14,11 +15,12 @@ html {
 
 body {
   min-height: 100vh;
-  font-family: "Press Start 2P", cursive;
+  font-family: "Lato", sans-serif;
   background: whitesmoke;
 }
 
 h1 {
+  font-family: "Press Start 2P", cursive;
   text-align: center;
   margin: 3rem 0;
 }
@@ -29,6 +31,7 @@ ul {
 
 li {
   margin: 1rem 0;
+  font-size: 2rem;
 }
 
 a {
@@ -37,10 +40,35 @@ a {
 }
 
 .gallery {
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: white;
   display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
+  grid-gap: 1rem;
 }
 
-.image {
-  width: 25rem;
-  height: 25rem;
+.img-container {
+  position: relative;
+  background-color: black;
+}
+
+.img {
+  width: 100%;
+  display: block;
+  transform: translateY(10%);
+}
+
+.title {
+  text-align: center;
+  color: #fff;
+  letter-spacing: 0.5rem;
+  text-transform: uppercase;
+  font-size: 2.5rem;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
