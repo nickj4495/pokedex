@@ -1,4 +1,5 @@
 const gallery = document.querySelector(".gallery");
+const body = document.getElementsByTagName("BODY")[0];
 
 // Add event listener on document that targets any event with an id, the <a></a> tags
 
@@ -7,10 +8,27 @@ document.addEventListener("click", (e) => {
   // clear our pokemon array before every fetch call
   pokemon = [];
   // fetch call here
+  renderLoader();
   getData(e.target.id);
 });
 
 let pokemon = [];
+
+function renderLoader() {
+  body.insertAdjacentHTML(
+    "afterbegin",
+    `
+    <div class="loader">
+    <img src="./loader.svg" alt="loading" />
+  </div>
+    `
+  );
+}
+
+function clearLoader() {
+  const loader = document.querySelector(".loader");
+  loader.style.display = "none";
+}
 
 // Fetch Calls
 
@@ -26,6 +44,14 @@ async function getData(id) {
     displayImages();
   });
 }
+
+// async function getTypes() {
+//   pokemon.map(async ({ name }) => {
+//     const response = await fetch(`https://pokeapi.co/api/v2/type/${name}/`);
+//     const data = await response.json();
+//     console.log(data);
+//   });
+// }
 
 async function getId(url) {
   const response = await fetch(url);
@@ -47,6 +73,7 @@ function displayImages() {
             `
     );
   });
+  clearLoader();
 }
 
 function clearGallery() {
