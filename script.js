@@ -4,11 +4,11 @@ const body = document.getElementsByTagName("BODY")[0];
 // Add event listener on document that targets any event with an id, the <a></a> tags
 
 document.addEventListener("click", (e) => {
-  if (!event.target.id) return;
+  if (!e.target.id) return;
   // clear our pokemon array before every fetch call
   pokemon = [];
   // fetch call here
-  renderLoader();
+  // renderLoader();
   getData(e.target.id);
 });
 
@@ -25,14 +25,10 @@ function renderLoader() {
   );
 }
 
-function clearLoader() {
-  const loader = document.querySelector(".loader");
-  loader.style.display = "none";
-}
-
 // Fetch Calls
 
 async function getData(id) {
+  renderLoader();
   // retrieve list of pokemon names based on generation id
   const generation = await fetch(
     `https://pokeapi.co/api/v2/generation/${id}/`
@@ -42,6 +38,7 @@ async function getData(id) {
     const pokeId = await getId(item.url);
     pokemon.push({ name: item.name, id: pokeId });
     displayImages();
+    clearLoader();
   });
 }
 
@@ -73,11 +70,15 @@ function displayImages() {
             `
     );
   });
-  clearLoader();
 }
 
 function clearGallery() {
   gallery.innerHTML = "";
+}
+
+function clearLoader() {
+  const loader = document.querySelector(".loader");
+  loader.style.display = "none";
 }
 
 // TESTING
