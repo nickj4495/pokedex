@@ -8,7 +8,6 @@ document.addEventListener("click", (e) => {
   // clear our pokemon array before every fetch call
   pokemon = [];
   // fetch call here
-  // renderLoader();
   getData(e.target.id);
 });
 
@@ -25,21 +24,37 @@ function renderLoader() {
   );
 }
 
+function clearLoader() {
+  const loader = document.querySelector(".loader");
+  loader.style.display = "none";
+}
+
 // Fetch Calls
 
 async function getData(id) {
   renderLoader();
-  // retrieve list of pokemon names based on generation id
-  const generation = await fetch(
-    `https://pokeapi.co/api/v2/generation/${id}/`
-  ).then((response) => response.json());
-  // create an array of objects for each pokemon in the generation
-  generation.pokemon_species.map(async (item) => {
-    const pokeId = await getId(item.url);
-    pokemon.push({ name: item.name, id: pokeId });
-    displayImages();
-    clearLoader();
-  });
+  const generation = await getGeneration(id);
+
+  await getId(generation);
+
+  console.log(pokemon);
+
+  displayImages();
+  clearLoader();
+}
+
+async function getGeneration(id) {
+  const response = await fetch(`https://pokeapi.co/api/v2/generation/${id}/`);
+  const data = response.json();
+  return data;
+}
+
+async function getId(gen) {
+  for (const item of gen.pokemon_species) {
+    const response = await fetch(item.url);
+    const data = await response.json();
+    pokemon.push({ name: item.name, id: data.id });
+  }
 }
 
 // async function getTypes() {
@@ -50,16 +65,9 @@ async function getData(id) {
 //   });
 // }
 
-async function getId(url) {
-  const response = await fetch(url);
-  const data = await response.json();
-  return data.id;
-}
-
 function displayImages() {
   clearGallery();
   pokemon.forEach(({ name, id }) => {
-    // console.log(name, imgUrl);
     gallery.insertAdjacentHTML(
       "beforeend",
       `
@@ -74,11 +82,6 @@ function displayImages() {
 
 function clearGallery() {
   gallery.innerHTML = "";
-}
-
-function clearLoader() {
-  const loader = document.querySelector(".loader");
-  loader.style.display = "none";
 }
 
 // TESTING
