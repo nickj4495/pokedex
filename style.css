@@ -42,12 +42,14 @@ h1 {
   margin: 3rem 0;
   font-size: 3rem;
   letter-spacing: 0.5rem;
+  text-transform: uppercase;
 }
 
 ul {
   list-style-type: none;
-  display: flex;
   text-align: center;
+  display: flex;
+  flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
 }
@@ -58,6 +60,11 @@ li {
   padding: 1rem;
   cursor: pointer;
   transition: 0.2 ease;
+  border: solid 2px tan;
+}
+
+li:not(:last-child) {
+  border-bottom: none;
 }
 
 li:hover {
@@ -115,4 +122,12 @@ a {
 .img-container:hover .title {
   opacity: 1;
   z-index: 10;
+}
+
+/* MEDIA QUERIES */
+
+@media only screen and (max-width: 750px) {
+  .title {
+    opacity: 1;
+  }
 }
