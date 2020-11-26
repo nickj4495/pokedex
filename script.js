@@ -13,6 +13,8 @@ document.addEventListener("click", (e) => {
   getData(e.target.id);
 });
 
+// Loader functions 
+
 function renderLoader() {
   body.insertAdjacentHTML(
     "afterbegin",
@@ -29,6 +31,22 @@ function clearLoader() {
   loader.style.display = "none";
 }
 
+// Helper Functions
+
+function clearGallery() {
+  gallery.innerHTML = "";
+}
+
+function sortNumbers(obj) {
+  obj.sort((a, b) => {
+    return a.id - b.id;
+  })
+}
+
+function sliceArray(arr, sliceAmount) {
+  return arr.slice(sliceAmount);
+}
+
 // Fetch Calls
 
 async function getData(id) {
@@ -42,7 +60,7 @@ async function getData(id) {
 
   console.log(pokemon);
 
-  displayImages();
+  displayImages(sliceArray(pokemon, 0));
   clearLoader();
 }
 
@@ -71,10 +89,10 @@ async function getId(gen) {
 //   });
 // }
 
-function displayImages() {
+function displayImages(arr) {
   clearGallery();
-  pokemon.forEach(({ name, id }) => {
-    gallery.insertAdjacentHTML(
+  arr.forEach(({name, id}) => {
+      gallery.insertAdjacentHTML(
       "beforeend",
       `
             <div class="img-container">
@@ -84,14 +102,4 @@ function displayImages() {
             `
     );
   });
-}
-
-function clearGallery() {
-  gallery.innerHTML = "";
-}
-
-function sortNumbers(obj) {
-  obj.sort((a, b) => {
-    return a.id - b.id;
-  })
 }
