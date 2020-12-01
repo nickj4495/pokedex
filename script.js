@@ -43,10 +43,6 @@ function sortNumbers(obj) {
   })
 }
 
-function sliceArray(arr, sliceAmount) {
-  return arr.slice(sliceAmount);
-}
-
 // Fetch Calls
 
 async function getData(id) {
@@ -60,7 +56,7 @@ async function getData(id) {
 
   console.log(pokemon);
 
-  displayImages(sliceArray(pokemon, 0));
+  displayImages(pokemon);
   clearLoader();
 }
 
@@ -81,25 +77,31 @@ async function getId(gen) {
   return promises;
 }
 
-// async function getTypes() {
-//   pokemon.map(async ({ name }) => {
-//     const response = await fetch(`https://pokeapi.co/api/v2/type/${name}/`);
-//     const data = await response.json();
-//     console.log(data);
-//   });
-// }
+async function getTypes(name) {
+  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}/`);
+  const data = await response.json();
+  console.log(data.types);
+  return data.types;
+}
 
 function displayImages(arr) {
   clearGallery();
-  arr.forEach(({name, id}) => {
+  arr.forEach(async ({name, id}) => {
+    const types = await getTypes(name);
       gallery.insertAdjacentHTML(
       "beforeend",
       `
             <div class="img-container">
+            <div class='types-container'>
+              ${types.map(obj => {
+                return `<div class="${obj.type.name} type">${obj.type.name}</div>`
+              })}
+          </div>
                 <div class="title">${name}</div>
                 <img class="img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png" alt='image of ${name}'/>
             </div>
             `
     );
+    getTypes(name);
   });
 }
