@@ -48,13 +48,13 @@ function sortNumbers(obj) {
 async function getData(id) {
   renderLoader();
   const generation = await getGeneration(id);
-  console.log(generation);
+  // console.log(generation);
 
   const pokemonData =  await getId(generation);
   sortNumbers(pokemonData);
   pokemon = pokemonData;
 
-  console.log(pokemon);
+  // console.log(pokemon);
 
   displayImages(pokemon);
   clearLoader();
@@ -80,7 +80,7 @@ async function getId(gen) {
 async function getTypes(name) {
   const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}/`);
   const data = await response.json();
-  console.log(data.types);
+  // console.log(data.types);
   return data.types;
 }
 
