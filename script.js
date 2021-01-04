@@ -37,10 +37,14 @@ function clearGallery() {
   gallery.innerHTML = "";
 }
 
-function sortNumbers(obj) {
-  obj.sort((a, b) => {
-    return a.id - b.id;
+function sortIds(arr) {
+  arr.sort((a, b) => {
+    return a - b;
   })
+}
+
+function getUrlId(url) {
+  return url.split('/')[6];
 }
 
 // Fetch Calls
@@ -48,13 +52,12 @@ function sortNumbers(obj) {
 async function getData(id) {
   renderLoader();
   const generation = await getGeneration(id);
-  // console.log(generation);
 
-  const pokemonData =  await getId(generation);
-  sortNumbers(pokemonData);
-  pokemon = pokemonData;
+  const filteredIds = getFilteredIds(generation);
 
-  // console.log(pokemon);
+  pokemon = await getPoke(filteredIds);
+
+  console.log(pokemon);
 
   displayImages(pokemon);
   clearLoader();
@@ -66,28 +69,30 @@ async function getGeneration(id) {
   return data;
 }
 
-async function getId(gen) {
+async function getPoke(ids) {
   const promises = await Promise.all(
-    gen.pokemon_species.map(async (item) => {
-      const response = await fetch(item.url);
+    ids.map(async (id) => {
+      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`);
       const data = await response.json();
-      return { id: data.id, name: data.name };
+      return data;
     })
   )
   return promises;
 }
 
-async function getTypes(name) {
-  const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}/`);
-  const data = await response.json();
-  // console.log(data.types);
-  return data.types;
+function getFilteredIds(data) {
+  let unfilteredIds = data.pokemon_species.map(item => {
+    return getUrlId(item.url);
+  });
+
+  sortIds(unfilteredIds);
+  unfilteredIds.splice(30);
+  return unfilteredIds;
 }
 
-function displayImages(arr) {
+function displayImages(pokemon) {
   clearGallery();
-  arr.forEach(async ({name, id}) => {
-    const types = await getTypes(name);
+  pokemon.forEach(async ({name, id, types}) => {
       gallery.insertAdjacentHTML(
       "beforeend",
       `
@@ -102,6 +107,5 @@ function displayImages(arr) {
             </div>
             `
     );
-    getTypes(name);
   });
 }
