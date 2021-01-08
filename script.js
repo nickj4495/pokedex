@@ -2,6 +2,7 @@
 
 const gallery = document.querySelector(".gallery");
 const body = document.getElementsByTagName("BODY")[0];
+const generation = document.querySelector(".generation");
 const topButton = document.getElementById("top");
 const bottomButton = document.getElementById("bottom");
 const leftButton = document.querySelector(".left");
@@ -17,7 +18,8 @@ let offset = 0
 
 // Add event listener on document that targets any event with an id, the <li> tags
 document.addEventListener("click", (e) => {
-  if (!e.target.id) return;
+  console.log(e.target.tagName);
+  if (e.target.tagName !== "LI") return;
   // clear our pokemon array and set offset to 0 before every new data call
   pokemon = [];
   offset = 0;
@@ -26,8 +28,10 @@ document.addEventListener("click", (e) => {
 });
 
 
-// left and right button event listeners
-leftButton.addEventListener("click", () => {
+////////// Button onclick handlers
+
+
+function leftButtonClick() {
   console.log("button clicked");
   if (offset !== 0) {
     offset -= limit;
@@ -36,9 +40,9 @@ leftButton.addEventListener("click", () => {
     displayImages(pokemon);
   }
   return;
-});
+}
 
-rightButton.addEventListener("click", () => {
+function rightButtonClick() {
   console.log("button clicked");
   
   if ((offset + limit) > pokemon.length) {
@@ -49,7 +53,7 @@ rightButton.addEventListener("click", () => {
     renderLoader();
     displayImages(pokemon);
   }
-});
+}
 
 ////////// Loader functions 
 
@@ -145,7 +149,7 @@ function getFilteredIds(data) {
 function displayImages(pokemon) {
   clearGallery();
   
-  slicePokemon(pokemon, limit, offset).forEach(async ({name, id, types}) => {
+  slicePokemon(pokemon, limit, offset).forEach(({name, id, types}) => {
     gallery.insertAdjacentHTML(
     "beforeend",
     `
@@ -154,7 +158,7 @@ function displayImages(pokemon) {
             ${types.map(obj => {
               return `<div class="${obj.type.name} type">${obj.type.name}</div>`
             })}
-        </div>
+          </div>
               <div class="title">${name}</div>
               <img class="img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png" alt='image of ${name}'/>
           </div>
