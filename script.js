@@ -2,7 +2,6 @@
 
 const gallery = document.querySelector(".gallery");
 const body = document.getElementsByTagName("BODY")[0];
-const generation = document.querySelector(".generation");
 const topButton = document.getElementById("top");
 const bottomButton = document.getElementById("bottom");
 const leftButton = document.querySelector(".left");
@@ -18,7 +17,8 @@ let offset = 0
 
 // Add event listener on document that targets any event with an id, the <li> tags
 document.addEventListener("click", (e) => {
-  console.log(e.target.tagName);
+
+  // 
   if (e.target.tagName !== "LI") return;
   // clear our pokemon array and set offset to 0 before every new data call
   pokemon = [];
