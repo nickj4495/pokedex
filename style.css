@@ -73,7 +73,7 @@ li:hover {
 }
 
 .gallery {
-  padding: 1.5rem;
+  margin: 1rem;
   display: grid;
   justify-content: center;
   align-items: center;
@@ -95,7 +95,7 @@ li:hover {
   transition: 0.2s ease;
 }
 
-.img:hover {
+.img-container:hover .img {
   filter: brightness(50%);
   transform: scale(0.95);
 }
@@ -142,7 +142,7 @@ li:hover {
 
 .button-container {
   text-align: center;
-  margin: 1rem 0;
+  margin: 2.5rem 0 1.5rem 0;
 }
 
 .button {

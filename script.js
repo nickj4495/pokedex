@@ -1,22 +1,57 @@
+////////// Document selectors
+
 const gallery = document.querySelector(".gallery");
 const body = document.getElementsByTagName("BODY")[0];
-const buttons = document.querySelector(".button-container");
+const topButton = document.getElementById("top");
+const bottomButton = document.getElementById("bottom");
+const leftButton = document.querySelector(".left");
+const rightButton = document.querySelector(".right");
+
+////////// Global variables
 
 let pokemon = [];
 let limit = 30;
 let offset = 0
 
-// Add event listener on document that targets any event with an id, the <a></a> tags
+////////// Event Listeners
 
+// Add event listener on document that targets any event with an id, the <li> tags
 document.addEventListener("click", (e) => {
   if (!e.target.id) return;
-  // clear our pokemon array before every fetch call
+  // clear our pokemon array and set offset to 0 before every new data call
   pokemon = [];
+  offset = 0;
   // fetch call here
   getData(e.target.id);
 });
 
-// Loader functions 
+
+// left and right button event listeners
+leftButton.addEventListener("click", () => {
+  console.log("button clicked");
+  if (offset !== 0) {
+    offset -= limit;
+    console.log(offset);
+    renderLoader();
+    displayImages(pokemon);
+  }
+  return;
+});
+
+rightButton.addEventListener("click", () => {
+  console.log("button clicked");
+  
+  if ((offset + limit) > pokemon.length) {
+    return;
+  } else {
+    offset += limit;
+    console.log(offset);
+    renderLoader();
+    displayImages(pokemon);
+  }
+});
+
+////////// Loader functions 
 
 function renderLoader() {
   body.insertAdjacentHTML(
@@ -34,7 +69,7 @@ function clearLoader() {
   loader.remove();
 }
 
-// Helper Functions
+////////// Helper Functions
 
 function clearGallery() {
   gallery.innerHTML = "";
@@ -46,36 +81,43 @@ function sortIds(arr) {
   })
 }
 
-function getUrlId(url) {
+function splitUrlId(url) {
   return url.split('/')[6];
 }
 
-function slice(arr, limit, offset) {
+function slicePokemon(arr, limit, offset) {
   return arr.slice(offset, (offset + limit));
 }
 
-// Fetch Calls
+////////// Fetch Calls
 
+// Main data function
 async function getData(id) {
   renderLoader();
+  
+  // Get array of pokemon based on generation
   const generation = await getGeneration(id);
 
+  // Parse id from pokemon urls and sort them low to high
   const filteredIds = getFilteredIds(generation);
 
+  // Returns array of pokemon data, low to high
   pokemon = await getPoke(filteredIds);
 
   console.log(pokemon);
 
   displayImages(pokemon);
-  clearLoader();
+  // clearLoader();
 }
 
+// fetch generation data
 async function getGeneration(id) {
   const response = await fetch(`https://pokeapi.co/api/v2/generation/${id}/`);
   const data = response.json();
   return data;
 }
 
+// fetch pokemon data with id
 async function getPoke(ids) {
   const promises = await Promise.all(
     ids.map(async (id) => {
@@ -88,18 +130,22 @@ async function getPoke(ids) {
 }
 
 function getFilteredIds(data) {
-  let unfilteredIds = data.pokemon_species.map(item => {
-    return getUrlId(item.url);
+  // map through array of urls and return the id at the end of each url
+  const unfilteredIds = data.pokemon_species.map(item => {
+    return splitUrlId(item.url);
   });
 
+  // sort ids low to high, starting with 1
   sortIds(unfilteredIds);
   return unfilteredIds;
 }
 
+////////// Display Function
+
 function displayImages(pokemon) {
   clearGallery();
   
-  slice(pokemon, limit, offset).forEach(async ({name, id, types}) => {
+  slicePokemon(pokemon, limit, offset).forEach(async ({name, id, types}) => {
     gallery.insertAdjacentHTML(
     "beforeend",
     `
@@ -115,5 +161,7 @@ function displayImages(pokemon) {
     `
     );
   });
-  buttons.hidden = false;
+  topButton.hidden = false;
+  bottomButton.hidden = false;
+  clearLoader();
 }
