@@ -1,7 +1,10 @@
 const gallery = document.querySelector(".gallery");
 const body = document.getElementsByTagName("BODY")[0];
+const buttons = document.querySelector(".button-container");
 
 let pokemon = [];
+let limit = 30;
+let offset = 0
 
 // Add event listener on document that targets any event with an id, the <a></a> tags
 
@@ -28,7 +31,7 @@ function renderLoader() {
 
 function clearLoader() {
   const loader = document.querySelector(".loader");
-  loader.style.display = "none";
+  loader.remove();
 }
 
 // Helper Functions
@@ -45,6 +48,10 @@ function sortIds(arr) {
 
 function getUrlId(url) {
   return url.split('/')[6];
+}
+
+function slice(arr, limit, offset) {
+  return arr.slice(offset, (offset + limit));
 }
 
 // Fetch Calls
@@ -86,26 +93,27 @@ function getFilteredIds(data) {
   });
 
   sortIds(unfilteredIds);
-  unfilteredIds.splice(30);
   return unfilteredIds;
 }
 
 function displayImages(pokemon) {
   clearGallery();
-  pokemon.forEach(async ({name, id, types}) => {
-      gallery.insertAdjacentHTML(
-      "beforeend",
-      `
-            <div class="img-container">
-            <div class='types-container'>
-              ${types.map(obj => {
-                return `<div class="${obj.type.name} type">${obj.type.name}</div>`
-              })}
+  
+  slice(pokemon, limit, offset).forEach(async ({name, id, types}) => {
+    gallery.insertAdjacentHTML(
+    "beforeend",
+    `
+          <div class="img-container">
+          <div class='types-container'>
+            ${types.map(obj => {
+              return `<div class="${obj.type.name} type">${obj.type.name}</div>`
+            })}
+        </div>
+              <div class="title">${name}</div>
+              <img class="img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png" alt='image of ${name}'/>
           </div>
-                <div class="title">${name}</div>
-                <img class="img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png" alt='image of ${name}'/>
-            </div>
-            `
+    `
     );
   });
+  buttons.hidden = false;
 }

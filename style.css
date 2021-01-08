@@ -74,7 +74,6 @@ li:hover {
 
 .gallery {
   padding: 1.5rem;
-  background-color: white;
   display: grid;
   justify-content: center;
   align-items: center;
@@ -86,7 +85,7 @@ li:hover {
   position: relative;
   background-color: #282828;
   cursor: pointer;
-  box-shadow: 0 .5rem 2rem rgba(0, 0, 0, .3);
+  box-shadow: .5rem .5rem 1rem rgba(0, 0, 0, .5);
   border-radius: 5px;
 }
 
@@ -139,6 +138,25 @@ li:hover {
 .img-container:hover .title {
   opacity: 1;
   z-index: 10;
+}
+
+.button-container {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.button {
+  font-size: 3rem;
+  cursor: pointer;
+  padding: .1rem 2rem .5rem 2rem;
+  border: none;
+  transition: all .2s ease;
+  background-color: #fff8dc;
+  outline: 2px solid rgba(255, 0, 0, .3);
+}
+
+.button:hover {
+  opacity: .5;
 }
 
 /* POKEMON TYPE COLORS */
