@@ -42,9 +42,8 @@
         </li>
       </ul>
     </div>
-    <div id="top" class="button-container" hidden>
-      <button class="button left" onclick="leftButtonClick()">&#8249;</button>
-      <button class="button right" onclick="rightButtonClick()">&#8250;</button>
+    <div class="filter-container">
+      <input class="filter" type="text" placeholder="Catch em all..." oninput="filterPokemon(this.value)" hidden>
     </div>
     <div class="gallery">
       <!-- <div class="img-container">
@@ -53,7 +52,7 @@
       </div> -->
     </div>
     <!-- Script -->
-    <div id="bottom" class="button-container" hidden>
+    <div class="button-container" hidden>
       <button class="button left" onclick="leftButtonClick()">&#8249;</button>
       <button class="button right" onclick="rightButtonClick()">&#8250;</button>
     </div>
