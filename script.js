@@ -2,8 +2,8 @@
 
 const gallery = document.querySelector(".gallery");
 const body = document.getElementsByTagName("BODY")[0];
-const topButton = document.getElementById("top");
-const bottomButton = document.getElementById("bottom");
+const filter = document.querySelector(".filter");
+const buttonContainer = document.querySelector(".button-container");
 const leftButton = document.querySelector(".left");
 const rightButton = document.querySelector(".right");
 
@@ -28,31 +28,36 @@ document.addEventListener("click", (e) => {
 });
 
 
-////////// Button onclick handlers
+////////// Event Handlers
 
-
+// Button Handlers
 function leftButtonClick() {
-  console.log("button clicked");
   if (offset !== 0) {
     offset -= limit;
-    console.log(offset);
-    renderLoader();
     displayImages(pokemon);
   }
   return;
 }
 
 function rightButtonClick() {
-  console.log("button clicked");
   
   if ((offset + limit) > pokemon.length) {
     return;
   } else {
     offset += limit;
-    console.log(offset);
-    renderLoader();
     displayImages(pokemon);
   }
+}
+
+// Input Handler
+function filterPokemon(val) {
+  offset = 0;
+  const search = val;
+
+  let filteredSearch = pokemon.filter(e => {
+    return e.name.includes(search);
+  });
+  displayImages(filteredSearch);
 }
 
 ////////// Loader functions 
@@ -111,7 +116,7 @@ async function getData(id) {
   console.log(pokemon);
 
   displayImages(pokemon);
-  // clearLoader();
+  clearLoader();
 }
 
 // fetch generation data
@@ -146,10 +151,10 @@ function getFilteredIds(data) {
 
 ////////// Display Function
 
-function displayImages(pokemon) {
+function displayImages(arr) {
   clearGallery();
   
-  slicePokemon(pokemon, limit, offset).forEach(({name, id, types}) => {
+  slicePokemon(arr, limit, offset).forEach(({name, id, types,}) => {
     gallery.insertAdjacentHTML(
     "beforeend",
     `
@@ -158,14 +163,16 @@ function displayImages(pokemon) {
             ${types.map(obj => {
               return `<div class="${obj.type.name} type">${obj.type.name}</div>`
             })}
+            <div class="poke-id">${id}</div>
           </div>
-              <div class="title">${name}</div>
-              <img class="img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png" alt='image of ${name}'/>
+            <div class="title">${name}</div>
+            <img class="img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png" alt='image of ${name}'/>
           </div>
     `
     );
   });
-  topButton.hidden = false;
-  bottomButton.hidden = false;
-  clearLoader();
+  
+  filter.hidden = false;
+  (arr.length >= 30) ? buttonContainer.hidden = false : buttonContainer.hidden = true
+  filter.scrollIntoView({behavior: "smooth", block: "start"});
 }
