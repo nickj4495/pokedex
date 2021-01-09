@@ -76,12 +76,28 @@ li:hover {
   background-color: #ccc;
 }
 
+.filter-container {
+  text-align: center;
+  margin: 1rem 0;
+}
+
+.filter {
+  width: 50%;
+  border: none;
+  outline: none;
+  padding: 1rem;
+  font-size: 1.8rem;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow:0 0 1.5rem 4px rgba(0, 0, 0, 0.1);
+}
+
 .gallery {
   margin: 1rem;
   display: grid;
   justify-content: center;
   align-items: center;
-  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  grid-template-columns: repeat(auto-fit, 25rem);
   grid-gap: 1.5rem;
 }
 
@@ -99,6 +115,11 @@ li:hover {
   transition: 0.2s ease;
 }
 
+/* @media only screen and (max-width: 750px) {
+  .img {
+    filter: brightness(80%);
+} */
+
 .img-container:hover .img {
   filter: brightness(50%);
   transform: scale(0.95);
@@ -109,20 +130,24 @@ li:hover {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  position: absolute;
-  top: 0;
-  left: 0;
   padding: 1rem;
+  font-family: "Press Start 2P", cursive;
 }
 
 .type {
-  font-size: 1.2rem;
-  font-family: "Press Start 2P", cursive;
   text-transform: uppercase;
   color: #fff;
   padding: .75rem 1.5rem;
   border-radius: 5px;
   margin-left: .5rem;
+}
+
+.poke-id {
+  font-size: 1.4rem;
+  text-transform: uppercase;
+  color: #fff;
+  margin-left: auto;
+  margin-right: .5rem;
 }
 
 .title {
@@ -140,14 +165,25 @@ li:hover {
   transition: 0.5s ease-out;
 }
 
+@media only screen and (max-width: 750px) {
+  .title {
+    opacity: 1;
+    font-weight: 400;
+    z-index: 10;
+  }
+}
+
 .img-container:hover .title {
   opacity: 1;
   z-index: 10;
 }
 
 .button-container {
-  text-align: center;
-  margin: 2.5rem 0 1.5rem 0;
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 1000;
 }
 
 .button {
