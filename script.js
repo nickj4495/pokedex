@@ -11,18 +11,23 @@ const rightButton = document.querySelector(".right");
 
 let pokemon = [];
 let limit = 30;
-let offset = 0
+let offset = 0;
+
+////////// Search Filters
+
+const pokeTypes = ['normal', 'fire', 'water', 'grass', 'electric', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dark', 'dragon', 'steel', 'fairy'];
 
 ////////// Event Listeners
 
 // Add event listener on document that targets any event with an id, the <li> tags
 document.addEventListener("click", (e) => {
 
-  // 
+  // if click event target isn't an li tag, return out of function
   if (e.target.tagName !== "LI") return;
-  // clear our pokemon array and set offset to 0 before every new data call
+  // clear out pokemon array and set offset to 0 before every new data call
   pokemon = [];
   offset = 0;
+
   // fetch call here
   getData(e.target.id);
 });
@@ -54,16 +59,30 @@ function filterPokemon(val) {
   offset = 0;
   const search = val;
 
-  let filteredSearch = pokemon.filter(e => {
+  // if (search == pokeTypes.filter(name => name.includes(search))) {
+  //   console.log('fired');
+  //   const types = pokemon.map(e => {
+  //     return e.types; 
+  //   });
+  //   console.log(types)
+  //   const filteredTypes = types.filter(e => {
+  //     return e.forEach(e => {
+  //       return e.type.name.includes(search);
+  //     })
+  //   })
+    
+  //   console.log(filteredTypes);
+  // }
+  const filteredNames = pokemon.filter(e => {
     return e.name.includes(search);
   });
-  displayImages(filteredSearch);
+  displayImages(filteredNames);
 }
 
 ////////// Loader functions 
 
-function renderLoader() {
-  body.insertAdjacentHTML(
+function renderLoader(el) {
+  el.insertAdjacentHTML(
     "afterbegin",
     `
     <div class="loader">
@@ -102,7 +121,7 @@ function slicePokemon(arr, limit, offset) {
 
 // Main data function
 async function getData(id) {
-  renderLoader();
+  renderLoader(body);
   
   // Get array of pokemon based on generation
   const generation = await getGeneration(id);
@@ -153,6 +172,7 @@ function getFilteredIds(data) {
 
 function displayImages(arr) {
   clearGallery();
+  renderLoader(gallery);
   
   slicePokemon(arr, limit, offset).forEach(({name, id, types,}) => {
     gallery.insertAdjacentHTML(
@@ -172,7 +192,12 @@ function displayImages(arr) {
     );
   });
   
+  // Make search input visible
   filter.hidden = false;
-  (arr.length >= 30) ? buttonContainer.hidden = false : buttonContainer.hidden = true
+
+  // Button only visible if more pokemon in pokemon array than the limi
+  (arr.length >= limit) ? buttonContainer.hidden = false : buttonContainer.hidden = true;
+
   filter.scrollIntoView({behavior: "smooth", block: "start"});
+  clearLoader();
 }
