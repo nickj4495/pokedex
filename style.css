@@ -17,7 +17,6 @@ body {
   min-height: 100vh;
   font-family: "Lato", sans-serif;
   background: whitesmoke;
-  overflow: hidden;
 }
 
 .loader {
