@@ -16,7 +16,7 @@ html {
 body {
   min-height: 100vh;
   font-family: "Lato", sans-serif;
-  background: whitesmoke;
+  background: #eee;
 }
 
 .loader {
@@ -46,34 +46,24 @@ h1 {
 }
 
 .generations-container {
-  width: 95vw;
-  margin: 0 auto;
-}
-
-ul {
+  width: 60%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(4, 1fr);
   list-style-type: none;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  align-items: center;
 }
 
 li {
-  width: 100%;
   font-size: 2rem;
   padding: 1rem;
   cursor: pointer;
   transition: 0.2 ease;
-  border: solid 2px tan;
-}
-
-li:not(:last-child) {
-  border-bottom: none;
 }
 
 li:hover {
-  background-color: #ccc;
+  background-color: rgba(255, 249, 210, .6);
 }
 
 .filter-container {
@@ -277,8 +267,32 @@ li:hover {
 /* MEDIA QUERIES */
 
 @media only screen and (max-width: 750px) {
+  html {
+    font-size: 50%;
+  }
+}
+
+@media only screen and (max-width: 750px) {
   .title {
     opacity: 1;
+  }
+}
+
+/* @media only screen and (max-width: 600px) {
+  .gallery {
+    margin: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 20rem);
+    grid-gap: 1.5rem;
+  }
+} */
+
+@media only screen and (max-width: 600px) {
+  .generations-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
   }
 }
 
@@ -286,7 +300,7 @@ li:hover {
 
 .ml11 {
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 1.8rem;
   text-align: center;
   margin-bottom: 1.5rem;
   font-family: "Press Start 2P", cursive;
