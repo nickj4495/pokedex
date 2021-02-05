@@ -16,7 +16,7 @@ html {
 body {
   min-height: 100vh;
   font-family: "Lato", sans-serif;
-  background: #eee;
+  background: whitesmoke;
 }
 
 .loader {
@@ -36,10 +36,20 @@ body {
   transform: translate(-50%, -50%);
 }
 
+.banner-wrapper {
+  background: linear-gradient(to bottom, 
+  rgba(255, 255, 255, .7), rgba(255, 255, 255, .7)), 
+  url("../dragonite-background.png");
+  background-size: contain;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, .3);
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+}
+
 h1 {
   font-family: "Press Start 2P", cursive;
   text-align: center;
-  margin: 3rem 0;
+  padding: 3rem 0;
   font-size: 3rem;
   letter-spacing: 0.5rem;
   text-transform: uppercase;
@@ -63,7 +73,7 @@ li {
 }
 
 li:hover {
-  background-color: rgba(255, 249, 210, .6);
+  opacity: .6;
 }
 
 .filter-container {
@@ -304,6 +314,7 @@ li:hover {
   text-align: center;
   margin-bottom: 1.5rem;
   font-family: "Press Start 2P", cursive;
+  color: #C22E28;
 }
 
 .ml11 .text-wrapper {
