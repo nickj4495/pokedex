@@ -182,7 +182,7 @@ function displayImages(arr) {
           <div class='types-container'>
             ${types.map(obj => {
               return `<div class="${obj.type.name} type">${obj.type.name}</div>`
-            })}
+            }).join("")}
             <div class="poke-id">${id}</div>
           </div>
             <div class="title">${name}</div>
@@ -211,29 +211,16 @@ textWrapper.innerHTML = textWrapper.textContent.replace(/([^\x00-\x80]|\w)/g, "<
 
 anime.timeline({loop: true})
   .add({
-    targets: '.ml11 .line',
-    scaleY: [0,1],
-    opacity: [0.5,1],
-    easing: "easeOutExpo",
-    duration: 700
-  })
-  .add({
-    targets: '.ml11 .line',
-    translateX: [0, document.querySelector('.ml11 .letters').getBoundingClientRect().width + 10],
-    easing: "easeOutExpo",
-    duration: 700,
-    delay: 100
-  }).add({
     targets: '.ml11 .letter',
     opacity: [0,1],
-    easing: "easeOutExpo",
-    duration: 700,
+    easing: "easeInOutExpo",
+    duration: 1400,
     offset: '-=775',
     delay: (el, i) => 34 * (i+1)
   }).add({
     targets: '.ml11',
     opacity: 0,
     duration: 700,
-    easing: "easeOutExpo",
-    delay: 700
+    easing: "easeInOutExpo",
+    delay: 100
   });
