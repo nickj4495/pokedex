@@ -8,7 +8,7 @@ const leftButton = document.querySelector(".left");
 const rightButton = document.querySelector(".right");
 
 ////////// Global variables
-
+ 
 let pokemon = [];
 let limit = 30;
 let offset = 0;
@@ -32,6 +32,13 @@ document.addEventListener("click", (e) => {
   getData(e.target.id);
 });
 
+document.addEventListener("click", e => {
+
+  console.log(e.target.parentElement.id);
+  if (e.target.parentElement.className !== "img-container") return;
+
+  displayPop();
+});
 
 ////////// Event Handlers
 
@@ -168,7 +175,7 @@ function getFilteredIds(data) {
   return unfilteredIds;
 }
 
-////////// Display Function
+////////// Display Functions
 
 function displayImages(arr) {
   clearGallery();
@@ -178,7 +185,7 @@ function displayImages(arr) {
     gallery.insertAdjacentHTML(
     "beforeend",
     `
-          <div class="img-container">
+          <div class="img-container" id="${id}" onclick="displayPop">
           <div class='types-container'>
             ${types.map(obj => {
               return `<div class="${obj.type.name} type">${obj.type.name}</div>`
@@ -200,6 +207,19 @@ function displayImages(arr) {
 
   filter.scrollIntoView({behavior: "smooth", block: "start"});
   clearLoader();
+}
+
+// POPUP DISPLAY
+
+function displayPop() {
+  body.insertAdjacentHTML('afterbegin',
+    `
+      <div class="popup">
+        <div class="popup-content">
+        </div>
+      </div>
+    `
+  );
 }
 
 
