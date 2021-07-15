@@ -1,0 +1,25 @@
+/* ANIMATION FROM https://tobiasahlin.com/moving-letters/ */
+
+.ml11 {
+    font-weight: 700;
+    font-size: 1.8rem;
+    letter-spacing: .1em;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-family: "Press Start 2P", cursive;
+    color: #C22E28;
+
+    .text-wrapper {
+        position: relative;
+        display: inline-block;
+        padding-top: 0.1em;
+        padding-right: 0.05em;
+        padding-bottom: 0.15em;
+        overflow: hidden;
+    }
+
+    .letter {
+        display: inline-block;
+        line-height: 1em;
+      }
+}

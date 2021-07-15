@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Pokedex</title>
-    <!-- <link
+    <link
       rel="icon"
       type="'image/png'"
       href="https://www.google.com/s2/favicons?domain=https://www.pokemoncenter.com/"
-    /> -->
-    <link rel="stylesheet" href="style.css" />
+    />
+    <link rel="stylesheet" href="dist/css/styles.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
   </head>
   <body class="body">
@@ -64,11 +64,12 @@
           <img class="img" src="">
         </div> -->
     </div>
-    <!-- Script -->
     <div class="button-container" hidden>
-      <button class="button left" onclick="leftButtonClick()">&#8249;</button>
-      <button class="button right" onclick="rightButtonClick()">&#8250;</button>
+      <button class="button left">&#8249;</button>
+      <button class="button right">&#8250;</button>
     </div>
-    <script src="./script.js" defer></script>
+    <!-- Script -->
+    <script src="src/js/main.js" type="module" defer></script>
+    <script src="src/js/animate.js" defer></script>
   </body>
 </html>
